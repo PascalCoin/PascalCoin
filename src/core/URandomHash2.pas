@@ -105,11 +105,11 @@ type
 
   TRandomHash2 = class sealed(TObject)
     const
-      MIN_N = 2; // Min-number of hashing rounds required to compute a nonce, min total rounds = J^MIN_N
-      MAX_N = 4; // Max-number of hashing rounds required to compute a nonce, max total rounds = J^MAX_N
-      MIN_J = 0; // Min-number of dependent neighbouring nonces required to evaluate a nonce round
+      MIN_N = 2; // Min-number of hashing rounds required to compute a nonce
+      MAX_N = 4; // Max-number of hashing rounds required to compute a nonce
+      MIN_J = 1; // Min-number of dependent neighbouring nonces required to evaluate a nonce round
       MAX_J = 8; // Max-number of dependent neighbouring nonces required to evaluate a nonce round
-      M = 256;    // The memory expansion unit (in bytes), max total bytes per nonce = M * ((MAX_J+1)^MAX_N (MAX_N-2) + 2)
+      M = 64;    // The memory expansion unit (in bytes)
       NUM_HASH_ALGO = 18;
 
       public type
