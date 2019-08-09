@@ -119,7 +119,7 @@ type
 
       function ContencateByteArrays(const AChunk1, AChunk2: TBytes): TBytes; inline;
       function MemTransform1(const AChunk: TBytes): TBytes;
-      function MemTransform2(const AChunk: TBytes): TBytes; inline;
+      function MemTransform2(const AChunk: TBytes): TBytes;
       function MemTransform3(const AChunk: TBytes): TBytes; inline;
       function MemTransform4(const AChunk: TBytes): TBytes; inline;
       function MemTransform5(const AChunk: TBytes): TBytes; inline;
@@ -168,7 +168,7 @@ type
       function GetCachedHashes : TArray<TCachedHash>; inline;
       function ContencateByteArrays(const AChunk1, AChunk2: TBytes): TBytes; inline;
       procedure MemTransform1(var ABuffer: TBytes; AReadStart, AWriteStart, ALength : Integer);
-      procedure MemTransform2(var ABuffer: TBytes; AReadStart, AWriteStart, ALength : Integer); inline;
+      procedure MemTransform2(var ABuffer: TBytes; AReadStart, AWriteStart, ALength : Integer);
       procedure MemTransform3(var ABuffer: TBytes; AReadStart, AWriteStart, ALength : Integer); inline;
       procedure MemTransform4(var ABuffer: TBytes; AReadStart, AWriteStart, ALength : Integer); inline;
       procedure MemTransform5(var ABuffer: TBytes; AReadStart, AWriteStart, ALength : Integer); inline;
@@ -371,16 +371,14 @@ begin
 
     LRandom := LGen.NextUInt32;
     case LRandom mod 8 of
-(*      0: LOutput := ContencateByteArrays(LOutput, MemTransform1(LNextChunk));
+      0: LOutput := ContencateByteArrays(LOutput, MemTransform1(LNextChunk));
       1: LOutput := ContencateByteArrays(LOutput, MemTransform2(LNextChunk));
       2: LOutput := ContencateByteArrays(LOutput, MemTransform3(LNextChunk));
       3: LOutput := ContencateByteArrays(LOutput, MemTransform4(LNextChunk));
       4: LOutput := ContencateByteArrays(LOutput, MemTransform5(LNextChunk));
       5: LOutput := ContencateByteArrays(LOutput, MemTransform6(LNextChunk));
       6: LOutput := ContencateByteArrays(LOutput, MemTransform7(LNextChunk));
-      7: LOutput := ContencateByteArrays(LOutput, MemTransform8(LNextChunk));             *)
-
-      0,1,2,3,4,5,6,7: LOutput := ContencateByteArrays(LOutput, MemTransform1(LNextChunk));
+      7: LOutput := ContencateByteArrays(LOutput, MemTransform8(LNextChunk));
     end;
     LBytesToAdd := LBytesToAdd - Length(LNextChunk);
   end;
@@ -704,16 +702,14 @@ begin
     if (LReadEnd + 1 + LCopyLen) > Length(LOutput) then
       LCopyLen := Length(LOutput) - (LReadEnd + 1);
     case LGen.NextUInt32 mod 8 of
-     (* 0: MemTransform1(LOutput, 0, LReadEnd+1, LCopyLen);
+      0: MemTransform1(LOutput, 0, LReadEnd+1, LCopyLen);
       1: MemTransform2(LOutput, 0, LReadEnd+1, LCopyLen);
       2: MemTransform3(LOutput, 0, LReadEnd+1, LCopyLen);
       3: MemTransform4(LOutput, 0, LReadEnd+1, LCopyLen);
       4: MemTransform5(LOutput, 0, LReadEnd+1, LCopyLen);
       5: MemTransform6(LOutput, 0, LReadEnd+1, LCopyLen);
       6: MemTransform7(LOutput, 0, LReadEnd+1, LCopyLen);
-      7: MemTransform8(LOutput, 0, LReadEnd+1, LCopyLen);      *)
-
-      0,1,2,3,4,5,6,7: MemTransform1(LOutput, 0, LReadEnd+1, LCopyLen);
+      7: MemTransform8(LOutput, 0, LReadEnd+1, LCopyLen);
     end;
     Inc(LReadEnd, LCopyLen);
     Inc(LCopyLen, LCopyLen);
@@ -732,7 +728,7 @@ begin
     raise EArgumentOutOfRangeException.Create(SOverlappingArgs);
 
   // Seed XorShift32 with last byte
-  LState := GetDWordLE(ABuffer, AWriteStart-4);
+  LState := GetDWordLE(ABuffer, LReadEnd-3);
   if LState = 0 then
     LState := 1;
 

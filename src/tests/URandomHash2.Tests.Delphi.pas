@@ -78,12 +78,9 @@ procedure TRandomHash2FastTest.TestRandomHash2_Standard;
 var
   i : integer;
   LStr, LStr2 : String;
-  LB, LB2 : TBytes;
 begin
   for i := Low(DATA_RANDOMHASH2_STANDARD_INPUT) to High(DATA_RANDOMHASH2_STANDARD_INPUT) do begin
-    LB := TRandomHash2Fast.Compute(ParseBytes(DATA_RANDOMHASH2_STANDARD_INPUT[i]));
-    LB2 := TRandomHash2.Compute(ParseBytes(DATA_RANDOMHASH2_STANDARD_INPUT[i]));
-    AssertEquals(ParseBytes(DATA_RANDOMHASH2_STANDARD_EXPECTED[i]), LB);
+    AssertEquals(ParseBytes(DATA_RANDOMHASH2_STANDARD_EXPECTED[i]), TRandomHash2Fast.Compute(ParseBytes(DATA_RANDOMHASH2_STANDARD_INPUT[i])));
    //WriteLn(Format('%s', [Bytes2Hex(TRandomHash.Compute(ParseBytes(LCase.Input)), True)]));
   end;
 end;
@@ -141,8 +138,8 @@ begin
   LHasher2 := LDisposables.AddObject( TRandomHash2Fast.Create ) as TRandomHash2Fast;
 
   for i := 1 to 100 do begin
-    LInput := TRandomHash.Compute( LInput );
-    //LInput := TBytes.Create(0,1,2,3);
+    //LInput := TRandomHash.Compute( LInput );
+    LInput := TBytes.Create(0,1,2,3);
     LBuff1 := LHasher1.Expand(LInput, 1, i);
     LBuff2 := LHasher2.Expand(LInput, 1, i);
     AssertEquals(LBuff1, LBuff2);
@@ -171,26 +168,30 @@ var
   LHasher1 : TRandomHash2;
   LHasher2 : TRandomHash2Fast;
   LDisposables : TDisposables;
-  i, j, k, LStartPad, LEndPad : Integer;
+  LStartPad, LEndPad, LTransformAmount : Integer;
 begin
   LInput := ParseBytes(DATA_BYTES);
   LHasher1 := LDisposables.AddObject( TRandomHash2.Create ) as TRandomHash2;
   LHasher2 := LDisposables.AddObject( TRandomHash2Fast.Create ) as TRandomHash2Fast;
 
 
-  for i := 0 to 10 do
-    for j := 0 to 10 do begin
-      LStartPad := i;
-      LEndPad := j;
-      for k := 1 to 1 do begin
-      WIP
+  for LStartPad := 0 to 5 do
+    for LEndPad := 0 to 5 do begin
+      for LTransformAmount := 4 to 10 do begin
+        // Ref
         LInput := TRandomHash.Compute( LInput );
+        SetLength(LInput, LTransformAmount);
         LBuff1 := LHasher1.MemTransform1(LInput);
-        SetLength(LTmp, Length(LInput)+ (LStartPad + LEndPad));
+        SetLength(LBuff1, LTransformAmount);
+
+        // Opt
+        SetLength(LTmp, Length(LInput)+ LStartPad + LTransformAmount + LEndPad);
         Move(LInput[0], LTmp[LStartPad], Length(LInput));
-        LHasher2.MemTransform1(LTmp, LStartPad, Length(LInput)+LStartPad, Length(LInput));
-        SetLength(LBuff2, Length(LTmp) - Length(LInput) - (LStartPad+LEndPad));
-        Move(LTmp[Length(LInput)+LStartPad], LBuff2[0], Length(LBuff2));
+        LHasher2.MemTransform1(LTmp, LStartPad, LStartPad + Length(LInput), LTransformAmount);
+        SetLength(LBuff2, LTransformAmount);
+        Move(LTmp[Length(LInput)+LStartPad], LBuff2[0], LTransformAmount);
+
+        // Check
         AssertEquals(LBuff1, LBuff2);
       end;
     end;
