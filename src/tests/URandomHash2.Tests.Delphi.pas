@@ -79,10 +79,9 @@ var
   i : integer;
   LStr, LStr2 : String;
 begin
-  for i := Low(DATA_RANDOMHASH2_STANDARD_INPUT) to High(DATA_RANDOMHASH2_STANDARD_INPUT) do begin
+  for i := Low(DATA_RANDOMHASH2_STANDARD_INPUT) to High(DATA_RANDOMHASH2_STANDARD_INPUT) do
     AssertEquals(ParseBytes(DATA_RANDOMHASH2_STANDARD_EXPECTED[i]), TRandomHash2Fast.Compute(ParseBytes(DATA_RANDOMHASH2_STANDARD_INPUT[i])));
    //WriteLn(Format('%s', [Bytes2Hex(TRandomHash.Compute(ParseBytes(LCase.Input)), True)]));
-  end;
 end;
 
 procedure TRandomHash2FastTest.ReferenceConsistency_RandomHash;
