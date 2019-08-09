@@ -164,6 +164,7 @@ type
       FCachedHashes : TList<TCachedHash>;
       FMemStats : TStatistics;
       FCaptureMemStats : Boolean;
+      FEnableCaching : Boolean;
 
       function GetCachedHashes : TArray<TCachedHash>; inline;
       function ContencateByteArrays(const AChunk1, AChunk2: TBytes): TBytes; inline;
@@ -182,6 +183,7 @@ type
     public
       constructor Create;
       destructor Destroy; override;
+      property EnableCaching : Boolean read FEnableCaching write FEnableCaching;
       property CaptureMemStats : Boolean read FCaptureMemStats write FCaptureMemStats;
       property CachedHashes : TArray<TCachedHash> read GetCachedHashes;
       property MemStats : TStatistics read FMemStats;
@@ -512,6 +514,7 @@ end;
 
 constructor TRandomHash2Fast.Create;
 begin
+  FEnableCaching := False;
   FCachedHashes := TList<TCachedHash>.Create;
   SetLength(Self.FCachedHeaderTemplate, 0);
   FHashAlg[0] := THashFactory.TCrypto.CreateSHA2_256();
@@ -635,7 +638,7 @@ begin
       LRoundOutputs.AddRange(LNeighborOutputs);
 
       // If neighbour was a fully evaluated nonce, cache it for re-use
-      if LNeighbourWasLastRound then begin
+      if FEnableCaching AND LNeighbourWasLastRound then begin
         LCachedHash.Nonce := GetLastDWordLE(LNeighbourNonceHeader);
         LCachedHash.Header := LNeighbourNonceHeader;
         LCachedHash.Hash := ComputeVeneerRound(LNeighborOutputs);

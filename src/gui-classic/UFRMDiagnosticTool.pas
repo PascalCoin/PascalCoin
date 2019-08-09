@@ -273,6 +273,7 @@ constructor TRandomHash2Thread.Create;
 begin
   Inherited Create('Random Hash 2');
   FHasher := TRandomHash2Fast.Create;
+  FHasher.EnableCaching := False;
   FDisposables.AddObject(FHasher);
 end;
 
@@ -293,6 +294,7 @@ constructor TRandomHash2CachedThread.Create;
 begin
   Inherited Create('Random Hash 2 (Cached)');
   FHasher := TRandomHash2Fast.Create;
+  FHasher.EnableCaching := True;
   FDisposables.AddObject(FHasher);
 end;
 
@@ -316,6 +318,7 @@ constructor TRandomHash2NonceScan.Create;
 begin
   Inherited Create('Random Hash 2 (Nonce Scan)');
   FHasher := TRandomHash2Fast.Create;
+  FHasher.EnableCaching := True;
   FDisposables.AddObject(FHasher);
 end;
 

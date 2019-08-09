@@ -817,6 +817,7 @@ begin
   LRandomHasher := LDisposables.AddObject( TRandomHashFast.Create ) as TRandomHashFast;
   LRandomHasher2 := LDisposables.AddObject( TRandomHash2Fast.Create ) as TRandomHash2Fast;
   LResultsToCheck := LDisposables.AddObject( TList<TNonceResult>.Create ) as TList<TNonceResult>;
+  LRandomHasher2.EnableCaching := True;
   Try
     while (Not Terminated) And (Not FCPUDeviceThread.Terminated) do begin
       Try
