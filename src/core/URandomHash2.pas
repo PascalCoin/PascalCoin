@@ -154,8 +154,16 @@ type
 
         TCachedHash = record
           Nonce : UInt32;
-          Header : TBytes;
+         // Header : TBytes;
           Hash : TBytes;
+        end;
+
+        TCache = class
+          private
+            FHeaderTemplate : TBytes;
+            FLevels : array[1..MAX_N] of TList<TCachedHash>;
+
+
         end;
 
     {$IFNDEF UNITTESTS}private{$ELSE}public{$ENDIF}
@@ -585,14 +593,16 @@ begin
   // Final "veneer" round of RandomHash is a SHA2-256 of compression of prior round outputs
   Result := FHashAlg[0].ComputeBytes(Compress(ARoundOutputs, LSeed)).GetBytes;
   // Tally memstats
-  LSize := 0;
-  for i := Low(ARoundOutputs) to High(ARoundOutputs) do
-    Inc(LSize, Length(ARoundOutputs[i]));
-  for i := 0 to FCachedHashes.Count - 1 do begin
-    LCachedItem := FCachedHashes.Items[i];
-    Inc(LSize, Length(LCachedItem.Hash) + Length(LCachedItem.Header) + 4);
+  if FCaptureMemStats then begin
+    LSize := 0;
+    for i := Low(ARoundOutputs) to High(ARoundOutputs) do
+      Inc(LSize, Length(ARoundOutputs[i]));
+    for i := 0 to FCachedHashes.Count - 1 do begin
+      LCachedItem := FCachedHashes.Items[i];
+      Inc(LSize, Length(LCachedItem.Hash) + Length(LCachedItem.Header) + 4);
+    end;
+    FMemStats.AddDatum(LSize);
   end;
-  FMemStats.AddDatum(LSize);
 end;
 
 function TRandomHash2Fast.CalculateRoundOutputs(const ABlockHeader: TBytes; ARound: Int32; out ARoundOutputs : TArray<TBytes>) : Boolean;
