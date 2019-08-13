@@ -171,13 +171,13 @@ type
             constructor Create;
             destructor Destroy;
             property EnablePartiallyComputed : boolean read FEnablePartiallyComputed write FEnablePartiallyComputed;
-            procedure AddPartiallyComputed(const AHeader : TBytes; ALevel : Integer; const AOutputs : TArray<TBytes>);
-            procedure AddFullyComputed(const AHeader : TBytes; ALevel : Integer; const AHash : TBytes);
-            function HasComputedHash : Boolean;
-            function PopComputedHash : TCachedHash;
-            function HasNextPartiallyComputedHash : Boolean;
-            function PeekNextPartiallyComputedHash : TCachedHash;
-            function PopNextPartiallyComputedHash : TCachedHash;
+            procedure AddPartiallyComputed(const AHeader : TBytes; ALevel : Integer; const AOutputs : TArray<TBytes>); inline;
+            procedure AddFullyComputed(const AHeader : TBytes; ALevel : Integer; const AHash : TBytes); inline;
+            function HasComputedHash : Boolean; inline;
+            function PopComputedHash : TCachedHash; inline;
+            function HasNextPartiallyComputedHash : Boolean; inline; 
+            function PeekNextPartiallyComputedHash : TCachedHash; inline;
+            function PopNextPartiallyComputedHash : TCachedHash; inline;
             function ComputeMemorySize : Integer;
         end;
 
@@ -198,7 +198,7 @@ type
       procedure MemTransform7(var ABuffer: TBytes; AReadStart, AWriteStart, ALength : Integer); inline;
       procedure MemTransform8(var ABuffer: TBytes; AReadStart, AWriteStart, ALength : Integer); inline;
       function Expand(const AInput: TBytes; AExpansionFactor: Int32; ASeed : UInt32) : TBytes;
-      function Compress(const AInputs: TArray<TBytes>; ASeed : UInt32): TBytes; inline;
+      function Compress(const AInputs: TArray<TBytes>; ASeed : UInt32): TBytes;
       function ComputeVeneerRound(const ARoundOutputs : TArray<TBytes>) : TBytes;
       function CalculateRoundOutputs(const ABlockHeader: TBytes; ARound: Int32; APCachedHash : PCachedHash; out ARoundOutputs : TArray<TBytes>) : Boolean; overload;
     public
@@ -209,9 +209,9 @@ type
       property CaptureMemStats : Boolean read FCaptureMemStats write FCaptureMemStats;
       property MemStats : TStatistics read FMemStats;
       function TryHash(const ABlockHeader: TBytes; AMaxRound : UInt32; out AHash : TBytes) : Boolean;
-      function Hash(const ABlockHeader: TBytes): TBytes; overload; inline;
-      function ResumeHash(const ACachedHash : TCachedHash): TBytes; overload; inline;
-      class function Compute(const ABlockHeader: TBytes): TBytes; overload; static; inline;
+      function Hash(const ABlockHeader: TBytes): TBytes; overload;
+      function ResumeHash(const ACachedHash : TCachedHash): TBytes; overload;
+      class function Compute(const ABlockHeader: TBytes): TBytes; overload; static;
   end;
 
  { ERandomHash2 }
@@ -938,9 +938,8 @@ begin
   if NOT FEnablePartiallyComputed then
     Exit;
 
-  if ALevel <= 2 then Exit;
-    
-  if FPartiallyComputed.Count > 1000 then Exit;
+  // Only keep 10 level 3's partially calculated
+  if (ALevel < 3) OR (FPartiallyComputed.Count > 10) then Exit;
     
   LItem.Nonce := GetLastDWordLE(AHeader);
   LItem.Header := AHeader;  

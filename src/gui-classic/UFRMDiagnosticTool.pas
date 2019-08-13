@@ -296,6 +296,7 @@ begin
   Inherited Create('Random Hash 2 (Cached)');
   FHasher := TRandomHash2Fast.Create;
   FHasher.EnableCaching := True;
+  FHasher.Cache.EnablePartiallyComputed := True;
   FHasher.CaptureMemStats := True;
   FDisposables.AddObject(FHasher);
 end;
@@ -323,6 +324,7 @@ begin
   Inherited Create('Random Hash 2 (Nonce Scan)');
   FHasher := TRandomHash2Fast.Create;
   FHasher.EnableCaching := True;
+  FHasher.Cache.EnablePartiallyComputed := True;
   FHasher.CaptureMemStats := True;
   FDisposables.AddObject(FHasher);
 end;
@@ -332,8 +334,8 @@ begin
   if FHasher.Cache.HasComputedHash then begin
     AOutput := FHasher.Cache.PopComputedHash.RoundOutputs[0];
     Result := True;
-  end else if FHasher.Cache.HasNextPartiallyComputedHash then
-    AOutput := FHasher.ResumeHash(FHasher.Cache.PopNextPartiallyComputedHash)
+  end else if FHasher.Cache.HasNextPartiallyComputedHash then begin
+    AOutput := FHasher.ResumeHash(FHasher.Cache.PopNextPartiallyComputedHash);
     Result := True;
   end else if FHasher.TryHash(AInput, FLevel, AOutput) then begin
     Result := True;
