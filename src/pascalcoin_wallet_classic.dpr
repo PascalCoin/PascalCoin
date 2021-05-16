@@ -58,8 +58,7 @@ uses
   UOpTransaction in 'core\UOpTransaction.pas',
   {$IFDEF USE_ABSTRACTMEM}
   UPCAbstractMem in 'core\UPCAbstractMem.pas',
-  UPCAbstractMemAccountKeys in 'core\UPCAbstractMemAccountKeys.pas',
-  {$ENDIF}
+  {$ENDIF }
   UPCAbstractMemAccounts in 'core\UPCAbstractMemAccounts.pas',
   UPCAccountsOrdenations in 'core\UPCAccountsOrdenations.pas',
   UPCCryptoLib4Pascal in 'core\UPCCryptoLib4Pascal.pas',
@@ -83,13 +82,20 @@ uses
   URandomHash in 'core\URandomHash.pas',
   URandomHash2 in 'core\URandomHash2.pas',
   URPC in 'core\URPC.pas',
-  USettings in 'core\USettings.pas',
   USha256 in 'core\USha256.pas',
   UTCPIP in 'core\UTCPIP.pas',
   UThread in 'core\UThread.pas',
   UTime in 'core\UTime.pas',
   UTxMultiOperation in 'core\UTxMultiOperation.pas',
-  UWallet in 'core\UWallet.pas';
+  UWallet in 'core\UWallet.pas',
+  URegURI in 'libraries\URI\URegURI.pas',
+  USettings in 'core\USettings.pas',
+  URegisterURI in 'core\URegisterURI.pas',
+  UAppParams in 'libraries\pascalcoin\UAppParams.pas',
+  UFolderHelper in 'libraries\pascalcoin\UFolderHelper.pas',
+  UJSONFunctions in 'libraries\pascalcoin\UJSONFunctions.pas',
+  UUnitTests in 'libraries\pascalcoin\UUnitTests.pas',
+  UPASCPaymentURI in 'core\UPASCPaymentURI.pas';
 
 {$R *.res}
 
@@ -100,3 +106,4 @@ begin
   Application.CreateForm(TFRMWallet, FRMWallet);
   Application.Run;
 end.
+

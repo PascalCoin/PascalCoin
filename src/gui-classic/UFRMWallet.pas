@@ -35,7 +35,7 @@ uses
   UNode, UGridUtils, UJSONFunctions, UAccounts, Menus, ImgList, UNetProtocol,
   UCrypto, Buttons, UPoolMining, URPC, UFRMAccountSelect, UConst,
   UAccountKeyStorage, UBaseTypes, UPCDataTypes, UOrderedList,
-  UFRMRPCCalls, UTxMultiOperation, USettings, UEPasa,
+  UFRMRPCCalls, UTxMultiOperation, USettings, UEPasa, UPASCPaymentURI,
   {$IFNDEF FPC}System.Generics.Collections{$ELSE}Generics.Collections{$ENDIF};
 
 Const
@@ -176,6 +176,7 @@ type
     MiFindOperationbyOpHash: TMenuItem;
     MiAccountInformation: TMenuItem;
     MiOperationsExplorer: TMenuItem;
+    ApplicationEvents1: TApplicationEvents;
     procedure cbHashRateUnitsClick(Sender: TObject);
     procedure ebHashRateBackBlocksExit(Sender: TObject);
     procedure ebHashRateBackBlocksKeyPress(Sender: TObject; var Key: char);
@@ -229,6 +230,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Test_ShowDiagnosticTool(Sender: TObject);
     procedure miAskForAccountClick(Sender: TObject);
+    procedure ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
   private
     FLastNodesCacheUpdatedTS : TDateTime;
     FBackgroundPanel : TPanel;
@@ -276,6 +278,8 @@ type
     FMustProcessNetConnectionUpdated : Boolean;
     FThreadActivate : TObject;
     FLastAccountsGridInvalidateTC : TTickCount;
+    FPaymentURI : IPASCPaymentURI;
+    FPaymentURIProcessed : boolean;
     Procedure OnNewAccount(Sender : TObject);
     Procedure OnReceivedHelloMessage(Sender : TObject);
     Procedure OnNetStatisticsChanged(Sender : TObject);
@@ -303,6 +307,9 @@ type
     Function DoUpdateAccountsFilter : Boolean;
     procedure CM_WalletChanged(var Msg: TMessage); message CM_PC_WalletKeysChanged;
     procedure CM_NetConnectionUpdated(var Msg: TMessage); message CM_PC_NetConnectionUpdated;
+
+    procedure CreatePaymentURI;
+    procedure ProcessPaymentURI;
   public
     { Public declarations }
     Property WalletKeys : TWalletKeysExt read FWalletKeys;
@@ -335,7 +342,7 @@ Uses UFolderHelper,{$IFDEF USE_GNUGETTEXT}gnugettext,{$ENDIF}
   UFRMAskForAccount,
   UAbstractBTree, UEPasaDecoder,
   UFRMAbout, UFRMOperation, UFRMWalletKeys, UFRMPayloadDecoder, UFRMNodesIp, UFRMMemoText,
-  UCommon, UPCOrderedLists;
+  UCommon, UPCOrderedLists, URegisterURI;
 
 Type
 
@@ -485,6 +492,8 @@ begin
   end;
   PageControlChange(Nil);
 end;
+
+
 
 procedure TFRMWallet.bbAccountsRefreshClick(Sender: TObject);
 begin
@@ -1421,6 +1430,30 @@ begin
   InitMacOSMenu;
   {$endif}
   PageControl.ActivePageIndex := 0;
+
+  // Skybuck: Part of PIP-0026 implementation
+  // register pascal coin executable as the URI protocol handle for pasc with windows 7 registry
+  // see PascalCoin\src\tests\HTML PascalCoin URI Test Page.htm
+  // for testing example.
+  RegisterURIWithWindows7;
+
+  // Skybuck Part of PIP-0026 implementation
+  // now see if there is any uri command line to parse into a payment uri interfaced object
+  // This is a little bit a nasty place to process uri, however for a first implementation it's done here.
+  // A cool idea could be to create a special form that says: "processing" or "parsing" uri
+  // with perhaps a little progress bar while it waits for pascal coin to become stable
+  // any errors during parsing could the be display in that window...
+  // once it's done parsing it could auto-disappear, however it could be so quick it might
+  // be a bit annoying for the user, unless it's deliberately delayed for 1 to 3 seconds or so
+  // but then this feature might become a bit slow and annoying to use, 1 second might be acceptable
+  // though. An alternative idea is to only show this form if something went wrong with the parsing/processing.
+  // If the user has not used PascalCoin for a while, the database/blockchain/safebox has to update/download
+  // first anyway thus then showing such a window would be nice, so that the user knows the uri was received
+  // successfully by PascalCoin and will be processed once the blockchain/safebox is updated.
+  // So perhaps code could detect when it's usefull to display the screen/form, or the rule could be
+  // at least 1 second but not more for consistency sake, otherwise user might get annoyed
+  // if sometimes it displays and sometimes not ! ;)
+  CreatePaymentURI;
 end;
 
 procedure TFRMWallet.ebHashRateBackBlocksKeyPress(Sender: TObject; var Key: char);
@@ -2709,6 +2742,133 @@ begin
   if last_i<0 then last_i := 0;
   if cbMyPrivateKeys.Items.Count>last_i then cbMyPrivateKeys.ItemIndex := last_i
   else if cbMyPrivateKeys.Items.Count>=0 then cbMyPrivateKeys.ItemIndex := 0;
+end;
+
+// Skybuck: Part of PIP-0026 implementation
+// This code calls the parser for the payment uri implementation
+// It creates an interfaced object containing information to be used for performing a transaction.
+// this information is later entered into the form for operations.
+// I have not checked if any of this code would lead to some strange kind of memory leak or so
+// for now I will assume delphi's reference counting will take care of it.
+// I assume the object, since it's started in a variable of the form, will be destroyed once
+// the form is also destroyed.
+procedure TFRMWallet.CreatePaymentURI;
+begin
+  if ParamCount >= 1 then
+  begin
+    FPaymentURI := TPASCPaymentURI.Parse(ParamStr(1));
+    FPaymentURIProcessed := false;
+  end
+end;
+
+// Skybuck: Part of PIP-0026 implementation
+// Once PascalCoin is in a useable state this method will be called from the onIdle method
+// and it will setup the transaction window, filling it with information from the URI payment
+// and then the user can execute it/authorize it.
+// v1
+procedure TFRMWallet.ProcessPaymentURI;
+var
+  vAccountList : TOrderedCardinalList;
+  vIndex : integer;
+  vBalance : uint64;
+  vAmount : uint64;
+  vTarget : TEPasa;
+begin
+  // create transaction window
+  With TFRMOperation.Create(Self) do
+  Try
+    // new to avoid some strange e-pasa conflicts.
+    ProcessingURIPayment := true;
+
+    PageControlOpType.ActivePage := tsTransaction;
+
+    // pascalcoin does not yet support sending from all accounts and then collecting enough amount
+  //  SenderAccounts.CopyFrom( FAccountsGrid.LockAccountsList );
+
+    // so instead find account which has enough balance:
+    SenderAccounts.Clear;
+
+    // so for now must select the account with the most balance for this to work.
+    vAccountList := FAccountsGrid.LockAccountsList;
+
+    // find account which has enough balance
+    vAmount:= Round(FPaymentURI.Amount * 10000) + TSettings.DefaultFee;
+    for vIndex := 0 to vAccountList.Count-1 do
+    begin
+      vBalance := TNode.Node.GetMempoolAccount(vAccountList.Get(vIndex)).balance;
+      if vBalance >= vAmount then
+      begin
+        ebSenderAccount.Text := TAccountComp.AccountNumberToAccountTxtNumber(vAccountList.Get(vIndex));
+        SenderAccounts.Add(vAccountList.Get(vIndex));
+        memoAccounts.Visible := false;
+        ebSenderAccount.Visible := true;
+        break;
+      end;
+    end;
+
+    // set parameters as soon as possible before payload memo click is called in wallet keys.
+    // setup information from paymeny uri
+    ebDestAccount.Text := FPaymentURI.Account;
+
+    // Skybuck: in case the account number is invalid, the label property of the uri payment
+    // could be used to find the account by name/label.
+    // However such a feature could be abused to re-direct funds to imposter account
+    // with a similiar name, benefitting from typos or in case original account was renamed or something
+    // so for now will not implement this feature but could be implemented in future :)
+
+    // Skybuck: for really large amounts there might be an issue with
+    // the "double" format used by uri payment parser,
+    // perhaps uint64 can hold larger values, not sure, pascalcoin seems
+    // to have a maximum value, this maximum value could be tested to see if
+    // the uri parser can handle it and output it successfully
+    ebAmount.Text := trim(format('%12.4f', [FPaymentURI.Amount]));
+    memoPayload.Text := FPaymentURI.Message;
+
+    DefaultFee := TSettings.DefaultFee;
+    WalletKeys := FWalletKeys;
+
+    // development/debug/test code, tests all fields of the current uri implementation.
+    // code from test application showing all fields of uri payment and how to use them.
+    {
+    Output.Lines.Add('Processing Pascal Coin URI: ');
+    Output.Lines.Add('Account: ' + vPascalCoinPaymentURI.Account);
+    Output.Lines.Add('Label: ' + vPascalCoinPaymentURI.&Label);
+    Output.Lines.Add('Message: ' + vPascalCoinPaymentURI.Message );
+    Output.Lines.Add('Amount: ' + trim(format('%12.4f', [vPascalCoinPaymentURI.Amount])) );
+    Output.Lines.Add('URI: ' + vPascalCoinPaymentURI.GetURI );
+    }
+    FPaymentURIProcessed := true;
+    ShowModal;
+  Finally
+    Free;
+  End;
+end;
+
+// Skybuck: Part of PIP-0026 implementation, could also be moved to a special thread, but for now this is easiest and probably safest.
+// This code executes a few time to see if pascal coin is done loading things... once it's done it will process a single uri if it's there.
+// The uri is extracted during creation time of the form, it is parsed/extract from command line parameters.
+// See CreatePaymentURI method.
+procedure TFRMWallet.ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
+var
+  vIsReady : string;
+begin
+  if (FPaymentURI <> nil) then
+  begin
+    if (not FPaymentURIProcessed) then
+    begin
+      if Assigned(FNode) then
+      begin
+        if FNode.IsReady(vIsReady) then
+        begin
+          if not FAccountsGrid.IsUpdatingData then
+          begin
+            ProcessPaymentURI;
+            Done := true;
+          end;
+        end;
+      end;
+    end;
+  end;
 end;
 
 initialization

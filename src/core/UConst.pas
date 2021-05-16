@@ -247,7 +247,9 @@ Const
   CT_PARAM_JSONRPCEnabled = 'JSONRPCEnabled';
   CT_PARAM_JSONRPCAllowedIPs = 'JSONRPCAllowedIPs';
 
-
+  // Skybuck: Part of PIP-0026 implementation
+  CT_URI_Description = 'PascalCoin';
+  CT_URI_Protocol = 'pasc';
 
 implementation
 

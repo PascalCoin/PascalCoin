@@ -1317,4 +1317,9 @@ object FRMWallet: TFRMWallet
       end
     end
   end
+  object ApplicationEvents1: TApplicationEvents
+    OnIdle = ApplicationEvents1Idle
+    Left = 729
+    Top = 19
+  end
 end

@@ -11,6 +11,13 @@ src/PascalCoinWalletExperimental
 *.dbg
 *.res
 
+## Delphi Remote Debugging Files
+# for 32-bit Windows and 64-bit Windows
+*.rsm
+
+# for macos
+.dylib.rsm
+
 ## OpenSSL 
 libeay32.dll
 libeay64.dll

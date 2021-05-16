@@ -8,7 +8,7 @@
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
         <ProjectVersion>18.8</ProjectVersion>
-        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <Platform Condition="'$(Platform)'==''">Win64</Platform>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
         <Base>true</Base>
@@ -204,7 +204,6 @@
         <DCCReference Include="core\UOpenSSL.pas"/>
         <DCCReference Include="core\UOpTransaction.pas"/>
         <DCCReference Include="core\UPCAbstractMem.pas"/>
-        <DCCReference Include="core\UPCAbstractMemAccountKeys.pas"/>
         <DCCReference Include="core\UPCAbstractMemAccounts.pas"/>
         <DCCReference Include="core\UPCAccountsOrdenations.pas"/>
         <DCCReference Include="core\UPCCryptoLib4Pascal.pas"/>
@@ -228,13 +227,20 @@
         <DCCReference Include="core\URandomHash.pas"/>
         <DCCReference Include="core\URandomHash2.pas"/>
         <DCCReference Include="core\URPC.pas"/>
-        <DCCReference Include="core\USettings.pas"/>
         <DCCReference Include="core\USha256.pas"/>
         <DCCReference Include="core\UTCPIP.pas"/>
         <DCCReference Include="core\UThread.pas"/>
         <DCCReference Include="core\UTime.pas"/>
         <DCCReference Include="core\UTxMultiOperation.pas"/>
         <DCCReference Include="core\UWallet.pas"/>
+        <DCCReference Include="libraries\URI\URegURI.pas"/>
+        <DCCReference Include="core\USettings.pas"/>
+        <DCCReference Include="core\URegisterURI.pas"/>
+        <DCCReference Include="libraries\pascalcoin\UAppParams.pas"/>
+        <DCCReference Include="libraries\pascalcoin\UFolderHelper.pas"/>
+        <DCCReference Include="libraries\pascalcoin\UJSONFunctions.pas"/>
+        <DCCReference Include="libraries\pascalcoin\UUnitTests.pas"/>
+        <DCCReference Include="core\UPASCPaymentURI.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -268,6 +274,12 @@
                 <DeployFile LocalName="pascalcoin_wallet_classic.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="pascalcoin_wallet_classic.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
+                        <RemoteName>pascalcoin_wallet_classic.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="pascalcoin_wallet_classic.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win64">
                         <RemoteName>pascalcoin_wallet_classic.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>

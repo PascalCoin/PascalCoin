@@ -162,6 +162,7 @@ type
     FDisabled : Boolean;
     FUpdating : Boolean;
     FSenderAccounts: TOrderedCardinalList; // TODO: TOrderedCardinalList should be replaced with a "TCardinalList" since signer account should be processed last
+    FProcessingURIPayment : boolean;
     procedure SetWalletKeys(const Value: TWalletKeys);
     Procedure UpdateWalletKeys;
     { Private declarations }
@@ -186,7 +187,9 @@ type
     procedure searchAccount(editBox : TCustomEdit);
   public
     { Public declarations }
+
     Property SenderAccounts : TOrderedCardinalList read FSenderAccounts;
+    Property ProcessingURIPayment : boolean read FProcessingURIPayment write FProcessingURIPayment;
     Property WalletKeys : TWalletKeys read FWalletKeys write SetWalletKeys;
     Property DefaultFee : Int64 read FDefaultFee write SetDefaultFee;
   end;
@@ -1618,7 +1621,7 @@ begin
 
   if LResolvedAccountNo <> CT_AccountNo_NUL then begin
     ATargetAccount := TNode.Node.GetMempoolAccount(LResolvedAccountNo);
-    if ATargetAccount.account=ASenderAccount.account then begin
+    if {(FSenderAccounts.Count = 1) and} (ATargetAccount.account=ASenderAccount.account) then begin // Skybuck: by adding the commented code, it would allow multiple sender accounts to send to an account which is also part of it, leaving this suggestion in for now.
       AErrors := 'Sender and dest account are the same';
       lblTransactionErrors.Caption := AErrors;
       Exit(False);
@@ -1818,7 +1821,7 @@ begin
     FEncodedPayload.payload_type := LTargetEPASA.PayloadType.ToProtocolValue;
     FEncodedPayload.payload_raw := LEncryptedPayloadBytes;
     Result := LValid;
-    if (LValid) And (Not FUpdating) then begin
+    if (LValid) And (Not FUpdating) and (not FProcessingURIPayment) then begin // Skybuck: FProcessingURIPayment is new and had to be introduced to fix conflict with e-pasa parser, perhaps e-pasa parser can be modified to take uri payment processing into consideration.
       ebDestAccount.Text := LTargetEPASA.ToString(False);
     end;
   end;
