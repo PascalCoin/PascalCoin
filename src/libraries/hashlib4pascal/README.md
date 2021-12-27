@@ -66,7 +66,7 @@ Available Algorithms
  
  * `Has160`
 
- * `RIPEMD (128, 256, 256, 320)`
+ * `RIPEMD (128, 160, 256, 256, 320)`
 
  * `Tiger (128, 160, 192 (Rounds 3, 4, 5))` 
 
@@ -93,6 +93,8 @@ Available Algorithms
  * `Blake2BP`
 
  * `Blake2SP`
+
+ * `Blake3`
 
 ### Key Derivation Functions
 ----------------------------------------
@@ -126,6 +128,8 @@ Available Algorithms
 * `Blake2X (Blake2XS, Blake2XB)`
 
 * `KMACXOF (KMAC128XOF, KMAC256XOF)`
+
+* `Blake3XOF`
 
 ### Supported Compilers
 ----------------------------------------
