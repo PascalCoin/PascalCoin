@@ -1,11 +1,8 @@
 program PascalCoin_Wallet_Classic;
-
 {$IFDEF FPC}
   {$MODE Delphi}
 {$ENDIF}
-
 {$I ./config.inc}
-
 uses
   {$IFnDEF FPC}
   {$ELSE}
@@ -15,6 +12,7 @@ uses
   Interfaces,
   {$ENDIF }
   Forms,
+  SysUtils,
   UFRMAbout in 'gui-classic\UFRMAbout.pas' {FRMAbout},
   UFRMAccountSelect in 'gui-classic\UFRMAccountSelect.pas' {FRMAccountSelect},
   UFRMMemoText in 'gui-classic\UFRMMemoText.pas' {FRMMemoText},
@@ -93,10 +91,59 @@ uses
 
 {$R *.res}
 
+{
+var
+  vSimpleBaseLib4PascalPackage : HMODULE;
+  vHashLib4PascalPackage : HMODULE;
+  vCryptoLib4PascalPackage : HMODULE;
+}
+
 begin
-  Application.Initialize;
-  {$IFDEF WINDOWS}Application.MainFormOnTaskbar := True;{$ENDIF}
-  Application.Title := 'Pascal Coin Wallet, Miner & Explorer';
-  Application.CreateForm(TFRMWallet, FRMWallet);
-  Application.Run;
+{
+  vSimpleBaseLib4PascalPackage := 0;
+  vHashLib4PascalPackage := 0;
+  vCryptoLib4PascalPackage := 0;
+
+  vSimpleBaseLib4PascalPackage := LoadPackage( '..\..\..\Runtime Packages\Win32\Debug\SimpleBaseLib4PascalPackage.bpl' );
+  if vSimpleBaseLib4PascalPackage <> 0 then
+  begin
+
+    vHashLib4PascalPackage := LoadPackage( '..\..\..\Runtime Packages\Win32\Debug\HashLib4PascalPackage.bpl' );
+    if vHashLib4PascalPackage <> 0 then
+    begin
+
+      vCryptoLib4PascalPackage := LoadPackage( '..\..\..\Runtime Packages\Win32\Debug\CryptoLib4PascalPackage.bpl' );
+      if vCryptoLib4PascalPackage <> 0 then
+      begin
+}
+        Application.Initialize;
+        {$IFDEF WINDOWS}Application.MainFormOnTaskbar := True;{$ENDIF}
+        Application.Title := 'Pascal Coin Wallet, Miner & Explorer';
+        Application.CreateForm(TFRMWallet, FRMWallet);
+        Application.Run;
+{
+        if vCryptoLib4PascalPackage <> 0 then
+        begin
+          UnLoadPackage( vCryptoLib4PascalPackage );
+        end;
+
+        if vHashLib4PascalPackage <> 0 then
+        begin
+          UnLoadPackage( vHashLib4PascalPackage );
+        end;
+
+        if vSimpleBaseLib4PascalPackage <> 0 then
+        begin
+          UnLoadPackage( vSimpleBaseLib4PascalPackage );
+        end;
+      end;
+    end;
+  end;
+}
 end.
+
+
+
+
+
+

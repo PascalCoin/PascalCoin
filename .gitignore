@@ -1,6 +1,6 @@
 
 ## Executable and side-files
-*.exe
+# *.exe
 *.identcache
 *.stat
 /src/*.app
@@ -9,13 +9,13 @@ src/PascalCoinWalletLazarus
 src/PascalCoinWalletExperimental
 *.dSYM*
 *.dbg
-*.res
+# *.res
 
 ## OpenSSL 
 libeay32.dll
 libeay64.dll
-libcrypto-1_1-x64.dll
-libcrypto-1_1.dll
+# libcrypto-1_1-x64.dll
+# libcrypto-1_1.dll
 libcrypto.so.1.1
 
 
@@ -23,8 +23,8 @@ libcrypto.so.1.1
 *.log
 
 # Lazarus-related changes
-#*.dproj
-*.dproj.local
+# *.dproj
+# *.dproj.local
 *.lps
 
 # do not delete generated .dcu files from Delphi folder... this would require expensive recompile times and memory usage.

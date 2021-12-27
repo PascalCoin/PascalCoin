@@ -68,9 +68,12 @@
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Posix;Winapi;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=;CFBundleName=</VerInfo_Keys>
-        <DCC_UnitSearchPath>.\libraries\gnugettext;.\libraries\abstractmem;.\libraries\sphere10;.\libraries\pascalcoin;.\libraries\synapse;.\core;.\gui-classic;.\libraries\regex;..\Delphi\Compiled Packages\$(Platform)\$(Config);..\Delphi\Compiled Units\$(Platform)\$(Config);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>.\libraries\gnugettext;.\libraries\abstractmem;.\libraries\sphere10;.\libraries\pascalcoin;.\libraries\synapse;.\core;.\gui-classic;.\libraries\regex;..\Delphi\Compiled Packages\$(Platform)\$(Config);..\Delphi\Runtime Packages\$(Platform)\$(Config);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DcuOutput>.\lib\$(Platform)\$(Config)</DCC_DcuOutput>
         <DCC_ExeOutput>..\Delphi\Builded Executables\$(Platform)\$(Config)</DCC_ExeOutput>
+        <UsePackages>true</UsePackages>
+        <DCC_UsePackage>SimpleBaseLib4PascalPackage;HashLib4PascalPackage;CryptoLib4PascalPackage;$(DCC_UsePackage)</DCC_UsePackage>
+        <Debugger_IncludeSystemVars>true</Debugger_IncludeSystemVars>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
@@ -101,11 +104,14 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitor</AppDPIAwarenessMode>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <Debugger_EnvVars>&quot;path=E:\SourceCode\PascalCoinGit\PascalCoin\Delphi\Runtime Packages\Win32\Release;E:\SourceCode\PascalCoinGit\PascalCoin\Delphi\Special Runtime Packages\Win32;E:\SourceCode\PascalCoinGit\PascalCoin\Delphi\Special Runtime Libraries\Win32;&quot;;$(Debugger_EnvVars)</Debugger_EnvVars>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <AppEnableHighDPI>true</AppEnableHighDPI>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <Debugger_EnvVars>&quot;path=E:\SourceCode\PascalCoinGit\PascalCoin\Delphi\Runtime Packages\Win64\Release;E:\SourceCode\PascalCoinGit\PascalCoin\Delphi\Special Runtime Packages\Win64;E:\SourceCode\PascalCoinGit\PascalCoin\Delphi\Special Runtime Libraries\Win64;&quot;;$(Debugger_EnvVars)</Debugger_EnvVars>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
@@ -118,11 +124,15 @@
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
         <AppDPIAwarenessMode>PerMonitor</AppDPIAwarenessMode>
         <DCC_ExeOutput>..\Delphi\Builded Executables\$(Platform)\$(Config)</DCC_ExeOutput>
+        <Debugger_IncludeSystemVars>true</Debugger_IncludeSystemVars>
+        <Debugger_EnvVars>&quot;path=E:\SourceCode\PascalCoinGit\PascalCoin\Delphi\Runtime Packages\Win32\Debug;E:\SourceCode\PascalCoinGit\PascalCoin\Delphi\Special Runtime Packages\Win32;E:\SourceCode\PascalCoinGit\PascalCoin\Delphi\Special Runtime Libraries\Win32;&quot;;$(Debugger_EnvVars)</Debugger_EnvVars>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <AppEnableHighDPI>true</AppEnableHighDPI>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <Debugger_EnvVars>&quot;path=E:\SourceCode\PascalCoinGit\PascalCoin\Delphi\Runtime Packages\Win64\Debug;E:\SourceCode\PascalCoinGit\PascalCoin\Delphi\Special Runtime Packages\Win64;E:\SourceCode\PascalCoinGit\PascalCoin\Delphi\Special Runtime Libraries\Win64;&quot;;$(Debugger_EnvVars)</Debugger_EnvVars>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -130,35 +140,26 @@
         </DelphiCompile>
         <DCCReference Include="gui-classic\UFRMAbout.pas">
             <Form>FRMAbout</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="gui-classic\UFRMAccountSelect.pas">
             <Form>FRMAccountSelect</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="gui-classic\UFRMMemoText.pas">
             <Form>FRMMemoText</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="gui-classic\UFRMNewPrivateKeyType.pas">
             <Form>FRMNewPrivateKeyType</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="gui-classic\UFRMNodesIp.pas">
             <Form>FRMNodesIp</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="gui-classic\UFRMOperation.pas">
             <Form>FRMOperation</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="gui-classic\UFRMOperationsExplorer.pas">
             <Form>FRMOperationsExplorer</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="gui-classic\UFRMSelectLanguage.pas">
-            <Form>FRMChangeLanguage</Form>
-        </DCCReference>
+        <DCCReference Include="gui-classic\UFRMSelectLanguage.pas"/>
         <DCCReference Include="gui-classic\UFRMPascalCoinWalletConfig.pas">
             <Form>FRMPascalCoinWalletConfig</Form>
         </DCCReference>
