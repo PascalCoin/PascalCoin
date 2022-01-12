@@ -43,9 +43,9 @@ type
         FCallReturnAccount : TCallReturnAccount;
         FSearching_AccountNumber : Int64;
         FSearching_UpdatedBlock : Integer;
-        function DoCompareData(const ALeftData, ARightData: TAbstractMemPosition): Integer; override;
+        function DoCompareData(const ALeftData, ARightData: {$IFDEF USE_ABSTRACTMEM}TAbstractMemPosition{$ELSE}integer{$ENDIF}): Integer; override;
       public
-        function NodeDataToString(const AData : TAbstractMemPosition) : String; override;
+        function NodeDataToString(const AData : {$IFDEF USE_ABSTRACTMEM}TAbstractMemPosition{$ELSE}integer{$ENDIF}) : String; override;
       End;
   private
     var
@@ -67,9 +67,9 @@ type
     FCallReturnAccount : TCallReturnAccount;
     FSearching_AccountNumber : Integer;
     FSearching_AccountInfo : TAccountInfo;
-    function DoCompareData(const ALeftData, ARightData: TAbstractMemPosition): Integer; override;
+    function DoCompareData(const ALeftData, ARightData: {$IFDEF USE_ABSTRACTMEM}TAbstractMemPosition{$ELSE}integer{$ENDIF}): Integer; override;
   public
-    function NodeDataToString(const AData : TAbstractMemPosition) : String; override;
+    function NodeDataToString(const AData : {$IFDEF USE_ABSTRACTMEM}TAbstractMemPosition{$ELSE}integer{$ENDIF}) : String; override;
     function UpdateAccountBySalePrice(const AAccountNumber : Integer; const AOldAccountInfo, ANewAccountInfo : TAccountInfo) : Boolean;
     constructor Create({$IFDEF USE_ABSTRACTMEM}AAbstractMem : TAbstractMem; const AInitialZone: TAMZone; {$ENDIF}ACallReturnAccount : TCallReturnAccount);
   End;
@@ -105,7 +105,7 @@ begin
 end;
 
 function TAccountsOrderedByUpdatedBlock.First(var AAccountNumber : Integer) : Boolean;
-var i : Int64;
+var i : {$IFDEF USE_ABSTRACTMEM}Int64{$ELSE}integer{$ENDIF};
 begin
   FBTree.Lock;
   Try
@@ -119,7 +119,7 @@ begin
 end;
 
 function TAccountsOrderedByUpdatedBlock.Next(var AAccountNumber : Integer): Boolean;
-var i : Int64;
+var i : {$IFDEF USE_ABSTRACTMEM}Int64{$ELSE}integer{$ENDIF};
 begin
   FBTree.Lock;
   Try
@@ -156,7 +156,7 @@ end;
 { TAccountsOrderedByUpdatedBlock.TAccounstByUpdatedBlockBTree }
 
 function TAccountsOrderedByUpdatedBlock.TAccounstByUpdatedBlockBTree.DoCompareData(
-  const ALeftData, ARightData: TAbstractMemPosition): Integer;
+  const ALeftData, ARightData: {$IFDEF USE_ABSTRACTMEM}TAbstractMemPosition{$ELSE}integer{$ENDIF}): Integer;
 var LLeftAccount, LRightAccount : TAccount;
 begin
   if (ALeftData = ARightData) then Exit(0);
@@ -172,7 +172,7 @@ begin
 end;
 
 function TAccountsOrderedByUpdatedBlock.TAccounstByUpdatedBlockBTree.NodeDataToString(
-  const AData: TAbstractMemPosition): String;
+  const AData: {$IFDEF USE_ABSTRACTMEM}TAbstractMemPosition{$ELSE}integer{$ENDIF}): String;
 var LAccount : TAccount;
 begin
   if FCallReturnAccount(AData,LAccount) then begin
@@ -196,7 +196,7 @@ begin
 end;
 
 function TAccountsOrderedBySalePrice.DoCompareData(const ALeftData,
-  ARightData: TAbstractMemPosition): Integer;
+  ARightData: {$IFDEF USE_ABSTRACTMEM}TAbstractMemPosition{$ELSE}integer{$ENDIF}): Integer;
 var LLeftAccount, LRightAccount : TAccount;
   LopResult : Int64;
 begin
@@ -215,7 +215,7 @@ begin
 end;
 
 function TAccountsOrderedBySalePrice.NodeDataToString(
-  const AData: TAbstractMemPosition): String;
+  const AData: {$IFDEF USE_ABSTRACTMEM}TAbstractMemPosition{$ELSE}integer{$ENDIF}): String;
 var LAccount : TAccount;
 begin
   if FCallReturnAccount(AData,LAccount) then begin

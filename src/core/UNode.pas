@@ -796,7 +796,8 @@ function TNode.TryFindPublicSaleAccount(AMaximumPrice: Int64; APreventRaceCondit
   // Finds an account at or below argument purchase price (or returns false)
   // APreventRaceCondition: When True will return a random account in valid range price
   // Limitations: Account must be >0
-var LtempAccNumber : Int64;
+var
+  LtempAccNumber : {$IFDEF USE_ABSTRACTMEM}Int64{$ELSE}integer{$ENDIF};
   LLastValidAccount, LCurrAccount : TAccount;
   LContinueSearching : Boolean;
 begin

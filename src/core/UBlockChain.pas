@@ -1104,10 +1104,12 @@ begin
     {$IFDEF USE_ABSTRACTMEM}
     SafeBox.SaveCheckpointing(LBankfilename);
     {$ELSE}
-    fs := TFileStream.Create(bankfilename,fmCreate);
+    fs := TFileStream.Create(LBankfilename,fmCreate);
     try
       fs.Size := 0;
       fs.Position:=0;
+// Skybuck: Disabled for now
+{
       if LowMemoryUsage then begin
         Bank.SafeBox.SaveSafeBoxToAStream(fs,0,Bank.SafeBox.BlocksCount-1);
       end else begin
@@ -1120,9 +1122,11 @@ begin
           ms.Free;
         end;
       end;
+}
     finally
       fs.Free;
     end;
+
     {$ENDIF}
     TLog.NewLog(ltInfo,ClassName,Format('Saving Safebox blocks:%d file:%s in %.2n seconds',[BlocksCount,LBankfilename,TPlatform.GetElapsedMilliseconds(LTC)/1000]));
     // Save a copy each 10000 blocks (aprox 1 month) only when not an orphan
