@@ -541,6 +541,7 @@ Type
 
   TPCBank = Class(TComponent)
   private
+    FLowMemoryUsage: Boolean;
     FStorage : TStorage;
     FSafeBox: TPCSafeBox;
     FLastBlockCache : TPCOperationsComp;
@@ -585,6 +586,7 @@ Type
     Function LoadBankFileInfo(Const AFilename : String; var ASafeBoxHeader : TPCSafeBoxHeader) : Boolean;
     Property Orphan : TOrphan read FOrphan write FOrphan;
     Function SaveBank(forceSave : Boolean) : Boolean;
+    property LowMemoryUsage : Boolean read FLowMemoryUsage write FLowMemoryUsage;
   End;
 
 Const
@@ -1108,21 +1110,18 @@ begin
     try
       fs.Size := 0;
       fs.Position:=0;
-// Skybuck: Disabled for now
-{
-      if LowMemoryUsage then begin
-        Bank.SafeBox.SaveSafeBoxToAStream(fs,0,Bank.SafeBox.BlocksCount-1);
+      if FLowMemoryUsage then begin
+        SafeBox.SaveSafeBoxToAStream(fs,0,SafeBox.BlocksCount-1);
       end else begin
         ms := TMemoryStream.Create;
         try
-          Bank.SafeBox.SaveSafeBoxToAStream(ms,0,Bank.SafeBox.BlocksCount-1);
+          SafeBox.SaveSafeBoxToAStream(ms,0,SafeBox.BlocksCount-1);
           ms.Position := 0;
           fs.CopyFrom(ms,0);
         finally
           ms.Free;
         end;
       end;
-}
     finally
       fs.Free;
     end;
