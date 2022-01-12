@@ -152,7 +152,7 @@ var
   LAccPubKey : TAccountKey;
   LOutput : TPCJSONArray;
   LStartsWith : TOrderedRawList;
-  LAccountsList : TList<Int64>;
+  LAccountsList : TList<{$IFDEF USE_ABSTRACTMEM}Int64{$ELSE}integer{$ENDIF}>;
 begin
   // Get Parameters
   Result := False;
@@ -279,7 +279,7 @@ begin
   end else begin
     // Search by type-forSale-balance
     if (LSearchByPubkey) then begin
-      LAccountsList := TList<Int64>.Create;
+      LAccountsList := TList<{$IFDEF USE_ABSTRACTMEM}Int64{$ELSE}integer{$ENDIF}>.Create;
       try
         LAccountsNumbersList.FillList(LStart,LEnd-LStart+1,LAccountsList);
         for i := 0 to LAccountsList.Count-1 do begin

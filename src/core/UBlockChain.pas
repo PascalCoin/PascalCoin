@@ -541,6 +541,7 @@ Type
 
   TPCBank = Class(TComponent)
   private
+    FLowMemoryUsage: Boolean;
     FStorage : TStorage;
     FSafeBox: TPCSafeBox;
     FLastBlockCache : TPCOperationsComp;
@@ -585,6 +586,7 @@ Type
     Function LoadBankFileInfo(Const AFilename : String; var ASafeBoxHeader : TPCSafeBoxHeader) : Boolean;
     Property Orphan : TOrphan read FOrphan write FOrphan;
     Function SaveBank(forceSave : Boolean) : Boolean;
+    property LowMemoryUsage : Boolean read FLowMemoryUsage write FLowMemoryUsage;
   End;
 
 Const
@@ -1104,16 +1106,16 @@ begin
     {$IFDEF USE_ABSTRACTMEM}
     SafeBox.SaveCheckpointing(LBankfilename);
     {$ELSE}
-    fs := TFileStream.Create(bankfilename,fmCreate);
+    fs := TFileStream.Create(LBankfilename,fmCreate);
     try
       fs.Size := 0;
       fs.Position:=0;
-      if LowMemoryUsage then begin
-        Bank.SafeBox.SaveSafeBoxToAStream(fs,0,Bank.SafeBox.BlocksCount-1);
+      if FLowMemoryUsage then begin
+        SafeBox.SaveSafeBoxToAStream(fs,0,SafeBox.BlocksCount-1);
       end else begin
         ms := TMemoryStream.Create;
         try
-          Bank.SafeBox.SaveSafeBoxToAStream(ms,0,Bank.SafeBox.BlocksCount-1);
+          SafeBox.SaveSafeBoxToAStream(ms,0,SafeBox.BlocksCount-1);
           ms.Position := 0;
           fs.CopyFrom(ms,0);
         finally
@@ -1123,6 +1125,7 @@ begin
     finally
       fs.Free;
     end;
+
     {$ENDIF}
     TLog.NewLog(ltInfo,ClassName,Format('Saving Safebox blocks:%d file:%s in %.2n seconds',[BlocksCount,LBankfilename,TPlatform.GetElapsedMilliseconds(LTC)/1000]));
     // Save a copy each 10000 blocks (aprox 1 month) only when not an orphan

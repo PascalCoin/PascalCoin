@@ -65,11 +65,11 @@
   {$DEFINE ASSUME_VALID_POW_OLD_PROTOCOLS}
   
   // Activate ABSTRACTMEM library. Will use a virtual memory caching mechanism for efficient usage without high RAM requirements
-  {$DEFINE USE_ABSTRACTMEM}
+  {.$DEFINE USE_ABSTRACTMEM}
 
   // Activate GNUGETTEXT library
   {$DEFINE USE_GNUGETTEXT}
-  
+
   // Activate usage of TPCTemporalFileStream instead of TBytes in order to minimize mem usage
   // This also fixes issue #207 High memory usage on FreePascal compiler
   {.$DEFINE USE_BIGBLOCKS_MEM_ON_DISK}

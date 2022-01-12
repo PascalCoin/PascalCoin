@@ -3196,7 +3196,9 @@ begin
       FreeAndNil(Labstracmem);
     end;
     {$ELSE}
-    sbStream := TNode.Node.Bank.Storage.OpenSafeBoxCheckpoint(_blockcount);
+ //   sbStream := TNode.Node.Bank.Storage.OpenSafeBoxCheckpoint(_blockcount);
+    // Skybuck: experimental fix;
+    sbStream := TNode.Node.Bank.OpenSafeBoxCheckpoint(_blockcount);
     try
       If Not Assigned(sbStream) then begin
         SendError(ntp_response,HeaderData.operation,CT_NetError_SafeboxNotFound,HeaderData.request_id,Format('Safebox stream file for block %d not found',[_blockcount]));
@@ -3398,7 +3400,8 @@ var responseStream, accountsStream : TMemoryStream;
   pubKey : TAccountKey;
   sbakl : TSafeboxPubKeysAndAccounts;
   ocl : TAccountsNumbersList;
-  LAccountsList : TList<Int64>;
+
+  LAccountsList : TList<{$IFDEF USE_ABSTRACTMEM}Int64{$ELSE}integer{$ENDIF}>;
 begin
   {
   This call is used to obtain Accounts used by a Public key
@@ -3445,7 +3448,7 @@ begin
     if Assigned(sbakl) then begin
       ocl := sbakl.GetAccountsUsingThisKey(pubKey);
       if Assigned(ocl) then begin
-        LAccountsList := TList<Int64>.Create;
+        LAccountsList := TList<{$IFDEF USE_ABSTRACTMEM}Int64{$ELSE}integer{$ENDIF}>.Create;
         try
           ocl.FillList(start,max,LAccountsList);
           for i := 0 to LaccountsList.Count-1 do begin
