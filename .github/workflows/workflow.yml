@@ -19,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install Lazarus
-      uses: gcarreno/setup-lazarus@v3.0.2
+      uses: gcarreno/setup-lazarus@v3.0.16
       with:
         lazarus-version: ${{ matrix.lazarus-versions }}
     - name: Build the Pascal daemon
