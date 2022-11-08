@@ -21,6 +21,9 @@ unit URandomHash;
   THIS LICENSE HEADER MUST NOT BE REMOVED.
 }
 
+// Skybuck: these compiler directives may be tripping up delphi as/after it changes target.
+// Skybuck: If "E2213 Bad packaged unit format" rebuild again and it should go away.
+
 {%region Compiler Directives}
 {$IFDEF FPC}
   {$UNDEF DELPHI}
@@ -46,6 +49,7 @@ unit URandomHash;
     {$OPTIMIZATION USERBP}
   {$ENDIF}
 {$ELSE}
+  {$LEGACYIFEND ON}
   {$DEFINE USE_UNROLLED_VARIANT}
   {$DEFINITIONINFO ON}
   {$HINTS OFF}
@@ -115,7 +119,7 @@ type
   TRandomHash = class sealed(TObject)
     const
       N = 5;               // Number of hashing rounds required to compute a nonce, total rounds = 2^N
-      M = (10 * 1024) * 5; // The memory expansion unit (in bytes), total bytes per nonce = M * (2^N (N-2) + 2)
+      M = 10 * 1024 * 5; // The memory expansion unit (in bytes), total bytes per nonce = M * (2^N (N-2) + 2) Skybuck: Delphi don't like ( ) inside const
 
     {$IFNDEF UNITTESTS}private{$ELSE}public{$ENDIF}
       FMurmur3 : IHash;
@@ -147,7 +151,7 @@ type
   TRandomHashFast = class sealed(TObject)
     const
       N = 5;               // Number of hashing rounds required to compute a nonce (total rounds = 2^N - 1)
-      M = (10 * 1024) * 5; // 10KB The memory expansion unit (in bytes)
+      M = 10 * 1024 * 5; // 10KB The memory expansion unit (in bytes) Skybuck: Delphi don't like ( ) inside const
     public type
 
       { TChecksummedByteCollection }

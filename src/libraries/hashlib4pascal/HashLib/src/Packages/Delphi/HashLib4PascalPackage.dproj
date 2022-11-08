@@ -1,0 +1,307 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{74243050-3336-46DF-B8AE-F92EFC327EF4}</ProjectGuid>
+        <MainSource>HashLib4PascalPackage.dpk</MainSource>
+        <Base>True</Base>
+        <Config Condition="'$(Config)'==''">Debug</Config>
+        <TargetedPlatforms>37891</TargetedPlatforms>
+        <AppType>Package</AppType>
+        <FrameworkType>None</FrameworkType>
+        <ProjectVersion>19.2</ProjectVersion>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Android' and '$(Base)'=='true') or '$(Base_Android)'!=''">
+        <Base_Android>true</Base_Android>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Android64' and '$(Base)'=='true') or '$(Base_Android64)'!=''">
+        <Base_Android64>true</Base_Android64>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='iOSDevice64' and '$(Base)'=='true') or '$(Base_iOSDevice64)'!=''">
+        <Base_iOSDevice64>true</Base_iOSDevice64>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+        <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+        <Base_Win64>true</Base_Win64>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Android64' and '$(Cfg_2)'=='true') or '$(Cfg_2_Android64)'!=''">
+        <Cfg_2_Android64>true</Cfg_2_Android64>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='iOSDevice64' and '$(Cfg_2)'=='true') or '$(Cfg_2_iOSDevice64)'!=''">
+        <Cfg_2_iOSDevice64>true</Cfg_2_iOSDevice64>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='OSX64' and '$(Cfg_2)'=='true') or '$(Cfg_2_OSX64)'!=''">
+        <Cfg_2_OSX64>true</Cfg_2_OSX64>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
+        <Cfg_2_Win32>true</Cfg_2_Win32>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win64)'!=''">
+        <Cfg_2_Win64>true</Cfg_2_Win64>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <DCC_E>false</DCC_E>
+        <DCC_F>false</DCC_F>
+        <DCC_K>false</DCC_K>
+        <DCC_N>false</DCC_N>
+        <DCC_S>false</DCC_S>
+        <DCC_ImageBase>00400000</DCC_ImageBase>
+        <GenDll>true</GenDll>
+        <GenPackage>true</GenPackage>
+        <SanitizedProjectName>HashLib4PascalPackage</SanitizedProjectName>
+        <RuntimeOnlyPackage>true</RuntimeOnlyPackage>
+        <VerInfo_Locale>8192</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=;CFBundleName=</VerInfo_Keys>
+        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
+        <DCC_DcpOutput>..\..\..\..\..\..\..\Delphi\Compiled Packages\$(Platform)\$(Config)</DCC_DcpOutput>
+        <DCC_BplOutput>..\..\..\..\..\..\..\Delphi\Runtime Packages\$(Platform)\$(Config)</DCC_BplOutput>
+        <DCC_DcuOutput>..\..\..\..\..\..\..\Delphi\Compiled Units\$(Platform)\$(Config)</DCC_DcuOutput>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Android)'!=''">
+        <VerInfo_Keys>package=com.embarcadero.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=1;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=auto;largeHeap=False;theme=TitleBar;hardwareAccelerated=true;apiKey=</VerInfo_Keys>
+        <BT_BuildType>Debug</BT_BuildType>
+        <Android_LauncherIcon192>$(BDS)\bin\Artwork\Android\FM_LauncherIcon_192x192.png</Android_LauncherIcon192>
+        <EnabledSysJars>android-support-v4.dex.jar;cloud-messaging.dex.jar;com-google-android-gms.play-services-ads-base.17.2.0.dex.jar;com-google-android-gms.play-services-ads-identifier.16.0.0.dex.jar;com-google-android-gms.play-services-ads-lite.17.2.0.dex.jar;com-google-android-gms.play-services-ads.17.2.0.dex.jar;com-google-android-gms.play-services-analytics-impl.16.0.8.dex.jar;com-google-android-gms.play-services-analytics.16.0.8.dex.jar;com-google-android-gms.play-services-base.16.0.1.dex.jar;com-google-android-gms.play-services-basement.16.2.0.dex.jar;com-google-android-gms.play-services-gass.17.2.0.dex.jar;com-google-android-gms.play-services-identity.16.0.0.dex.jar;com-google-android-gms.play-services-maps.16.1.0.dex.jar;com-google-android-gms.play-services-measurement-base.16.4.0.dex.jar;com-google-android-gms.play-services-measurement-sdk-api.16.4.0.dex.jar;com-google-android-gms.play-services-stats.16.0.1.dex.jar;com-google-android-gms.play-services-tagmanager-v4-impl.16.0.8.dex.jar;com-google-android-gms.play-services-tasks.16.0.1.dex.jar;com-google-android-gms.play-services-wallet.16.0.1.dex.jar;com-google-firebase.firebase-analytics.16.4.0.dex.jar;com-google-firebase.firebase-common.16.1.0.dex.jar;com-google-firebase.firebase-iid-interop.16.0.1.dex.jar;com-google-firebase.firebase-iid.17.1.1.dex.jar;com-google-firebase.firebase-measurement-connector.17.0.1.dex.jar;com-google-firebase.firebase-messaging.17.5.0.dex.jar;fmx.dex.jar;google-play-billing.dex.jar;google-play-licensing.dex.jar</EnabledSysJars>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Android64)'!=''">
+        <Android_LauncherIcon192>$(BDS)\bin\Artwork\Android\FM_LauncherIcon_192x192.png</Android_LauncherIcon192>
+        <EnabledSysJars>android-support-v4.dex.jar;cloud-messaging.dex.jar;com-google-android-gms.play-services-ads-base.17.2.0.dex.jar;com-google-android-gms.play-services-ads-identifier.16.0.0.dex.jar;com-google-android-gms.play-services-ads-lite.17.2.0.dex.jar;com-google-android-gms.play-services-ads.17.2.0.dex.jar;com-google-android-gms.play-services-analytics-impl.16.0.8.dex.jar;com-google-android-gms.play-services-analytics.16.0.8.dex.jar;com-google-android-gms.play-services-base.16.0.1.dex.jar;com-google-android-gms.play-services-basement.16.2.0.dex.jar;com-google-android-gms.play-services-gass.17.2.0.dex.jar;com-google-android-gms.play-services-identity.16.0.0.dex.jar;com-google-android-gms.play-services-maps.16.1.0.dex.jar;com-google-android-gms.play-services-measurement-base.16.4.0.dex.jar;com-google-android-gms.play-services-measurement-sdk-api.16.4.0.dex.jar;com-google-android-gms.play-services-stats.16.0.1.dex.jar;com-google-android-gms.play-services-tagmanager-v4-impl.16.0.8.dex.jar;com-google-android-gms.play-services-tasks.16.0.1.dex.jar;com-google-android-gms.play-services-wallet.16.0.1.dex.jar;com-google-firebase.firebase-analytics.16.4.0.dex.jar;com-google-firebase.firebase-common.16.1.0.dex.jar;com-google-firebase.firebase-iid-interop.16.0.1.dex.jar;com-google-firebase.firebase-iid.17.1.1.dex.jar;com-google-firebase.firebase-measurement-connector.17.0.1.dex.jar;com-google-firebase.firebase-messaging.17.5.0.dex.jar;fmx.dex.jar;google-play-billing.dex.jar;google-play-licensing.dex.jar</EnabledSysJars>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_iOSDevice64)'!=''">
+        <iOS_AppStore1024>$(BDS)\bin\Artwork\iOS\iPhone\FM_ApplicationIcon_1024x1024.png</iOS_AppStore1024>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <BT_BuildType>Debug</BT_BuildType>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
+        <BT_BuildType>Debug</BT_BuildType>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
+        <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+        <DCC_Optimize>false</DCC_Optimize>
+        <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Android64)'!=''">
+        <BT_BuildType>Debug</BT_BuildType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_iOSDevice64)'!=''">
+        <BT_BuildType>Debug</BT_BuildType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_OSX64)'!=''">
+        <BT_BuildType>Debug</BT_BuildType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
+        <DCC_DcpOutput>..\..\..\..\..\..\..\Delphi\Compiled Packages\$(Platform)\$(Config)</DCC_DcpOutput>
+        <DCC_BplOutput>..\..\..\..\..\..\..\Delphi\Runtime Packages\$(Platform)\$(Config)</DCC_BplOutput>
+        <DCC_DcuOutput>..\..\..\..\..\..\..\Delphi\Compiled Units\$(Platform)\$(Config)</DCC_DcuOutput>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+    </PropertyGroup>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <DCCReference Include="rtl.dcp"/>
+        <DCCReference Include="soaprtl.dcp"/>
+        <DCCReference Include="..\..\Base\HlpHash.pas"/>
+        <DCCReference Include="..\..\Base\HlpHashBuffer.pas"/>
+        <DCCReference Include="..\..\Base\HlpHashCryptoNotBuildIn.pas"/>
+        <DCCReference Include="..\..\Base\HlpHashFactory.pas"/>
+        <DCCReference Include="..\..\Base\HlpHashResult.pas"/>
+        <DCCReference Include="..\..\Base\HlpHashRounds.pas"/>
+        <DCCReference Include="..\..\Base\HlpHashSize.pas"/>
+        <DCCReference Include="..\..\Base\HlpHMACNotBuildInAdapter.pas"/>
+        <DCCReference Include="..\..\Base\HlpKDF.pas"/>
+        <DCCReference Include="..\..\Base\HlpMultipleTransformNonBlock.pas"/>
+        <DCCReference Include="..\..\Checksum\HlpAdler32.pas"/>
+        <DCCReference Include="..\..\Checksum\HlpCRC.pas"/>
+        <DCCReference Include="..\..\Checksum\HlpCRC16.pas"/>
+        <DCCReference Include="..\..\Checksum\HlpCRC32.pas"/>
+        <DCCReference Include="..\..\Checksum\HlpCRC32Fast.pas"/>
+        <DCCReference Include="..\..\Checksum\HlpCRC64.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpBlake2B.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpBlake2S.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpGost.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpGOST3411_2012.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpGrindahl256.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpGrindahl512.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpHAS160.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpHaval.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpMD2.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpMD4.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpMD5.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpMDBase.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpPanama.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpRadioGatun32.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpRadioGatun64.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpRIPEMD.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpRIPEMD128.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpRIPEMD160.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpRIPEMD256.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpRIPEMD320.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpSHA0.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpSHA1.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpSHA2_224.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpSHA2_256.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpSHA2_256Base.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpSHA2_384.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpSHA2_512.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpSHA2_512_224.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpSHA2_512_256.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpSHA2_512Base.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpSHA3.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpSnefru.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpTiger.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpTiger2.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpWhirlPool.pas"/>
+        <DCCReference Include="..\..\NullDigest\HlpNullDigest.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpAP.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpBernstein.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpBernstein1.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpBKDR.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpDEK.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpDJB.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpELF.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpFNV.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpFNV1a.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpJenkins3.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpJS.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpMurmur2.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpMurmurHash3_x86_32.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpOneAtTime.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpPJW.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpRotating.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpRS.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpSDBM.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpShiftAndXor.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpSuperFast.pas"/>
+        <DCCReference Include="..\..\Hash32\HlpXXHash32.pas"/>
+        <DCCReference Include="..\..\Hash64\HlpFNV1a64.pas"/>
+        <DCCReference Include="..\..\Hash64\HlpFNV64.pas"/>
+        <DCCReference Include="..\..\Hash64\HlpMurmur2_64.pas"/>
+        <DCCReference Include="..\..\Hash64\HlpSipHash.pas"/>
+        <DCCReference Include="..\..\Hash64\HlpXXHash64.pas"/>
+        <DCCReference Include="..\..\Hash128\HlpMurmurHash3_x64_128.pas"/>
+        <DCCReference Include="..\..\Hash128\HlpMurmurHash3_x86_128.pas"/>
+        <DCCReference Include="..\..\Hash128\HlpSipHash128.pas"/>
+        <DCCReference Include="..\..\Interfaces\HlpICRC.pas"/>
+        <DCCReference Include="..\..\Interfaces\HlpIHash.pas"/>
+        <DCCReference Include="..\..\Interfaces\HlpIHashInfo.pas"/>
+        <DCCReference Include="..\..\Interfaces\HlpIHashResult.pas"/>
+        <DCCReference Include="..\..\Interfaces\HlpIKDF.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpBlake2BP.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpBlake2SP.pas"/>
+        <DCCReference Include="..\..\KDF\HlpPBKDF2_HMACNotBuildInAdapter.pas"/>
+        <DCCReference Include="..\..\KDF\HlpPBKDF_Argon2NotBuildInAdapter.pas"/>
+        <DCCReference Include="..\..\KDF\HlpArgon2TypeAndVersion.pas"/>
+        <DCCReference Include="..\..\KDF\HlpPBKDF_ScryptNotBuildInAdapter.pas"/>
+        <DCCReference Include="..\..\Nullable\HlpNullable.pas"/>
+        <DCCReference Include="..\..\Utils\HlpConverters.pas"/>
+        <DCCReference Include="..\..\Utils\HlpBitConverter.pas"/>
+        <DCCReference Include="..\..\Utils\HlpBits.pas"/>
+        <DCCReference Include="..\..\Utils\HlpArrayUtils.pas"/>
+        <DCCReference Include="..\..\Utils\HlpHashLibTypes.pas"/>
+        <DCCReference Include="..\..\Crypto\Blake2SParams\HlpBlake2SParams.pas"/>
+        <DCCReference Include="..\..\Crypto\Blake2BParams\HlpBlake2BParams.pas"/>
+        <DCCReference Include="..\..\Interfaces\IBlake2SParams\HlpIBlake2SParams.pas"/>
+        <DCCReference Include="..\..\Interfaces\IBlake2BParams\HlpIBlake2BParams.pas"/>
+        <DCCReference Include="..\..\Crypto\HlpBlake3.pas"/>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType>Package</Borland.ProjectType>
+        <BorlandProject>
+            <Delphi.Personality>
+                <Source>
+                    <Source Name="MainSource">HashLib4PascalPackage.dpk</Source>
+                </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k270.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp270.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
+            </Delphi.Personality>
+            <Platforms>
+                <Platform value="Android">False</Platform>
+                <Platform value="Android64">True</Platform>
+                <Platform value="iOSDevice64">True</Platform>
+                <Platform value="iOSSimulator">False</Platform>
+                <Platform value="OSX64">True</Platform>
+                <Platform value="Win32">True</Platform>
+                <Platform value="Win64">True</Platform>
+            </Platforms>
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+    <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
+</Project>

@@ -1,0 +1,9 @@
+[submodule "src/libraries/CryptoLib4Pascal"]
+	path = src/libraries/CryptoLib4Pascal
+	url = https://github.com/Xor-el/CryptoLib4Pascal.git
+[submodule "src/libraries/HashLib4Pascal"]
+	path = src/libraries/HashLib4Pascal
+	url = https://github.com/Xor-el/HashLib4Pascal.git
+[submodule "src/libraries/SimpleBaseLib4Pascal"]
+	path = src/libraries/SimpleBaseLib4Pascal
+	url = https://github.com/Xor-el/SimpleBaseLib4Pascal.git
