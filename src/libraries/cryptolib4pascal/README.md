@@ -112,8 +112,8 @@ Available Algorithms
 ----------------------------------------
 
 * `HMAC (all supported hashes)`
- 
-* `X25519` 
+
+* `KMAC (KMAC128, KMAC256)`
 
 ### Hashes
 ----------------------------------------
@@ -132,7 +132,7 @@ Available Algorithms
 
  * `Gost3411-2012 (256, 512)`
 
- * `RIPEMD (128, 256, 256, 320)`
+ * `RIPEMD (128, 160, 256, 256, 320)`
 
  * `Tiger`
 
@@ -203,7 +203,7 @@ Available Algorithms
 * - [ ] `NetBSD`
 
 
-* - [ ] `DragonBSD`
+* - [ ] `DragonFlyBSD`
 
 
 

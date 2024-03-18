@@ -1,0 +1,72 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{714672EA-06D7-4FD5-B28C-1D00ADF7EA1C}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="libraries\simplebaselib4pascal\SimpleBaseLib\src\Packages\Delphi\SimpleBaseLib4PascalPackage.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="libraries\hashlib4pascal\HashLib\src\Packages\Delphi\HashLib4PascalPackage.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="libraries\cryptolib4pascal\CryptoLib\src\Packages\Delphi\CryptoLib4PascalPackage.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="pascalcoin_wallet_classic.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="SimpleBaseLib4PascalPackage">
+        <MSBuild Projects="libraries\simplebaselib4pascal\SimpleBaseLib\src\Packages\Delphi\SimpleBaseLib4PascalPackage.dproj"/>
+    </Target>
+    <Target Name="SimpleBaseLib4PascalPackage:Clean">
+        <MSBuild Projects="libraries\simplebaselib4pascal\SimpleBaseLib\src\Packages\Delphi\SimpleBaseLib4PascalPackage.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SimpleBaseLib4PascalPackage:Make">
+        <MSBuild Projects="libraries\simplebaselib4pascal\SimpleBaseLib\src\Packages\Delphi\SimpleBaseLib4PascalPackage.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="HashLib4PascalPackage">
+        <MSBuild Projects="libraries\hashlib4pascal\HashLib\src\Packages\Delphi\HashLib4PascalPackage.dproj"/>
+    </Target>
+    <Target Name="HashLib4PascalPackage:Clean">
+        <MSBuild Projects="libraries\hashlib4pascal\HashLib\src\Packages\Delphi\HashLib4PascalPackage.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="HashLib4PascalPackage:Make">
+        <MSBuild Projects="libraries\hashlib4pascal\HashLib\src\Packages\Delphi\HashLib4PascalPackage.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="CryptoLib4PascalPackage">
+        <MSBuild Projects="libraries\cryptolib4pascal\CryptoLib\src\Packages\Delphi\CryptoLib4PascalPackage.dproj"/>
+    </Target>
+    <Target Name="CryptoLib4PascalPackage:Clean">
+        <MSBuild Projects="libraries\cryptolib4pascal\CryptoLib\src\Packages\Delphi\CryptoLib4PascalPackage.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CryptoLib4PascalPackage:Make">
+        <MSBuild Projects="libraries\cryptolib4pascal\CryptoLib\src\Packages\Delphi\CryptoLib4PascalPackage.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="pascalcoin_wallet_classic">
+        <MSBuild Projects="pascalcoin_wallet_classic.dproj"/>
+    </Target>
+    <Target Name="pascalcoin_wallet_classic:Clean">
+        <MSBuild Projects="pascalcoin_wallet_classic.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="pascalcoin_wallet_classic:Make">
+        <MSBuild Projects="pascalcoin_wallet_classic.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="SimpleBaseLib4PascalPackage;HashLib4PascalPackage;CryptoLib4PascalPackage;pascalcoin_wallet_classic"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="SimpleBaseLib4PascalPackage:Clean;HashLib4PascalPackage:Clean;CryptoLib4PascalPackage:Clean;pascalcoin_wallet_classic:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="SimpleBaseLib4PascalPackage:Make;HashLib4PascalPackage:Make;CryptoLib4PascalPackage:Make;pascalcoin_wallet_classic:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
