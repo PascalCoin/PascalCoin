@@ -28,7 +28,10 @@ libcrypto-1_1.dll
 #*.dproj
 *.dproj.local
 *.lps
-*.dcu
+
+# do not delete generated .dcu files from Delphi folder... this would require expensive recompile times and memory usage.
+# instead specify which dcu files to ignore on a path basis.
+# *.dcu
 lib/
 PascalCoinWallet_Icon.ico
 
@@ -58,3 +61,4 @@ dunit.ini
 src/libssl-1_1.dll
 src/libssl-1_1-x64.dll
 *.rsm
+/src/lib/*.dcu
