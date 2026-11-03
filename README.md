@@ -226,7 +226,7 @@ Community libraries include:
 ## License
 
 ```
-Copyright (c) 2016-2024 Pascal developers based on original Albert Molina source code
+Copyright (c) 2016-2025 Pascal developers based on original Albert Molina source code
 ```
 
 The source is distributed under the [MIT license](LICENSE). Please use at your
